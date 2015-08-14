@@ -18,6 +18,15 @@ customersApp.controller('CustomersController', ['$scope', '$stateParams', 'Authe
                 templateUrl: 'modules/customers/views/edit-customer.client.view.html',
                 controller: function ($scope, $modalInstance, customer) {
                     $scope.customer = customer;
+
+                    $scope.ok = function () {
+                        $modalInstance.close($scope.customer);
+                    };
+
+                    $scope.cancel = function () {
+                        $modalInstance.dismiss('cancel');
+                    };
+
                 },
                 size: size,
                 resolve: {
@@ -45,7 +54,14 @@ customersApp.controller('CustomersCreateController', ['$scope', 'Customers',
 
 customersApp.controller('CustomersUpdateController', ['$scope', 'Customers',
     function ($scope, Customers) {
+        this.update = function (updatedCustomer) {
+            var customer = $scope.customer;
 
+            customer.$update(function () {
+            }, function (errorResponse) {
+                $scope.error = errorResponse.data.message;
+            });
+        };
     }
 ]);
 
