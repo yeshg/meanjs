@@ -19,12 +19,15 @@ customersApp.controller('CustomersController', ['$scope', '$stateParams', 'Authe
                 controller: function ($scope, $modalInstance, customer) {
                     $scope.customer = customer;
 
-                    $scope.ok = function () {
-                        $modalInstance.close($scope.customer);
+                    $scope.ok = function (IsValid) {
+                        if (IsValid){
+                            $modalInstance.close($scope.customer);
+                        }
                     };
 
                     $scope.cancel = function () {
                         $modalInstance.dismiss('cancel');
+                        location.reload();                  // Because we need to prove to user db has not been changed
                     };
 
                 },
